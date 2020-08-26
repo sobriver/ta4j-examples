@@ -47,32 +47,31 @@ public class Quickstart {
 
     public static void main(String[] args) {
 
-        // Getting a bar series (from any provider: CSV, web service, etc.)
+        // 加载数据
         BarSeries series = CsvTradesLoader.loadBitstampSeries();
 
-        // Getting the close price of the bars
+        // 获取第一日的收盘价
         Num firstClosePrice = series.getBar(0).getClosePrice();
-        System.out.println("First close price: " + firstClosePrice.doubleValue());
-        // Or within an indicator:
+        System.out.println("第一日的收盘价: " + firstClosePrice.doubleValue());
+        // 构造一个收盘价的指标
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
-        // Here is the same close price:
         System.out.println(firstClosePrice.isEqual(closePrice.getValue(0))); // equal to firstClosePrice
 
-        // Getting the simple moving average (SMA) of the close price over the last 5
-        // bars
+        //构造一个5日SMA指标(利用收盘价指标构造)
         SMAIndicator shortSma = new SMAIndicator(closePrice, 5);
-        // Here is the 5-bars-SMA value at the 42nd index
-        System.out.println("5-bars-SMA value at the 42nd index: " + shortSma.getValue(42).doubleValue());
+        System.out.println("在第24处的5日SMA指标值:" + shortSma.getValue(42).doubleValue());
 
-        // Getting a longer SMA (e.g. over the 30 last bars)
+        //构造一个30日SMA指标(利用收盘价指标构造)
         SMAIndicator longSma = new SMAIndicator(closePrice, 30);
 
-        // Ok, now let's building our trading rules!
 
-        // Buying rules
-        // We want to buy:
-        // - if the 5-bars SMA crosses over 30-bars SMA
-        // - or if the price goes below a defined price (e.g $800.00)
+
+        //---------------策略编写方面-------------------------------------
+        /**
+         * 买入规则定义如下:
+         * 1.如果5日SMA值超过30日SMA值
+         * 2.或者收盘价低于800
+         */
         Rule buyingRule = new CrossedUpIndicatorRule(shortSma, longSma)
                 .or(new CrossedDownIndicatorRule(closePrice, 800));
 
@@ -81,27 +80,34 @@ public class Quickstart {
         // - if the 5-bars SMA crosses under 30-bars SMA
         // - or if the price loses more than 3%
         // - or if the price earns more than 2%
+        /**
+         * 卖出规则定义如下:
+         * 1.如果5日SMA值低于30日SMA值
+         * 2.或者亏损超过3%(指收盘价)
+         * 3.或者盈利超过2%(指收盘价)
+         */
         Rule sellingRule = new CrossedDownIndicatorRule(shortSma, longSma)
                 .or(new StopLossRule(closePrice, series.numOf(3))).or(new StopGainRule(closePrice, series.numOf(2)));
 
-        // Running our juicy trading strategy...
+
+        // 开始运行上面编写的策略
         BarSeriesManager seriesManager = new BarSeriesManager(series);
         TradingRecord tradingRecord = seriesManager.run(new BaseStrategy(buyingRule, sellingRule));
         System.out.println("交易次数: " + tradingRecord.getTradeCount());
 
-        // Analysis
 
-        // Getting the profitable trades ratio
+
+
+        // -----------分析-------------------------
         AnalysisCriterion profitTradesRatio = new AverageProfitableTradesCriterion();
         System.out.println("利润率: " + profitTradesRatio.calculate(series, tradingRecord));
-        // Getting the reward-risk ratio
         AnalysisCriterion rewardRiskRatio = new RewardRiskRatioCriterion();
         System.out.println("风险比: " + rewardRiskRatio.calculate(series, tradingRecord));
 
         // Total profit of our strategy
         // vs total profit of a buy-and-hold strategy
         AnalysisCriterion vsBuyAndHold = new VersusBuyAndHoldCriterion(new TotalProfitCriterion());
-        System.out.println("Our profit vs buy-and-hold profit: " + vsBuyAndHold.calculate(series, tradingRecord));
+        System.out.println("刚编写的策略与一直持有的策略对比: " + vsBuyAndHold.calculate(series, tradingRecord));
 
         // Your turn!
     }
