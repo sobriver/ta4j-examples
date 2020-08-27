@@ -38,7 +38,7 @@ public class BuildBarSeries {
     /**
      * Calls different functions that shows how a BaseBarSeries could be created and
      * how Bars could be added
-     *
+     * 通过几个不同的方法展示BaseBarSeries是如何被创建的, Bars如何被添加
      * @param args command line arguments (ignored)
      */
     @SuppressWarnings("unused")

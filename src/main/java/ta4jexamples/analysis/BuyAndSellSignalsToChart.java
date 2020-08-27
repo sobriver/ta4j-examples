@@ -53,12 +53,13 @@ import java.util.List;
 /**
  * This class builds a graphical chart showing the buy/sell signals of a
  * strategy.
+ * 利用图表来展示动量交易策略的信号
  */
 public class BuyAndSellSignalsToChart {
 
     /**
      * Builds a JFreeChart time series from a Ta4j bar series and an indicator.
-     *
+     * 利用JFreeChart来构建图表
      * @param barSeries the ta4j bar series
      * @param indicator the indicator
      * @param name      the name of the chart time series
@@ -78,7 +79,7 @@ public class BuyAndSellSignalsToChart {
     /**
      * Runs a strategy over a bar series and adds the value markers corresponding to
      * buy/sell signals to the plot.
-     *
+     * 运行策略, 并将买卖信号的值与绘图坐标对应起来
      * @param series   the bar series
      * @param strategy the trading strategy
      * @param plot     the plot
@@ -131,17 +132,19 @@ public class BuyAndSellSignalsToChart {
 
         // Getting the bar series
         BarSeries series = CsvTradesLoader.loadBitstampSeries();
-        // Building the trading strategy
+        // Building the trading strategy 构建一个动量交易策略
         Strategy strategy = MovingMomentumStrategy.buildStrategy(series);
 
         /*
          * Building chart datasets
+         * 构建图表数据集
          */
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(buildChartTimeSeries(series, new ClosePriceIndicator(series), "Bitstamp Bitcoin (BTC)"));
 
         /*
          * Creating the chart
+         * 创建图表
          */
         JFreeChart chart = ChartFactory.createTimeSeriesChart("Bitstamp BTC", // title
                 "Date", // x-axis label

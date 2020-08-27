@@ -41,6 +41,9 @@ import ta4jexamples.loaders.CsvBarsLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * todo ??
+ */
 public class SimpleMovingAverageRangeBacktest {
 
     public static void main(String[] args) {

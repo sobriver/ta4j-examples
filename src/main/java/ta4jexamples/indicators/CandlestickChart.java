@@ -47,6 +47,7 @@ import java.util.Date;
 
 /**
  * This class builds a traditional candlestick chart.
+ * 创建蜡烛图
  */
 public class CandlestickChart {
 

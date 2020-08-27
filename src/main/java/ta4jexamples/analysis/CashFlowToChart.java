@@ -52,6 +52,7 @@ import java.util.Date;
 
 /**
  * This class builds a graphical chart showing the cash flow of a strategy.
+ * 利用图表来展示动量策略的现金流
  */
 public class CashFlowToChart {
 

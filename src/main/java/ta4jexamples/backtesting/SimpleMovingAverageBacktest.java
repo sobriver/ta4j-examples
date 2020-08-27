@@ -37,6 +37,9 @@ import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+/**
+ * SMA回测
+ */
 public class SimpleMovingAverageBacktest {
 
     public static void main(String[] args) throws InterruptedException {

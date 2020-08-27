@@ -42,7 +42,7 @@ import ta4jexamples.loaders.CsvTradesLoader;
 
 /**
  * Moving momentum strategy.
- *
+ * 动量交易策略
  * @see <a href=
  *      "http://stockcharts.com/help/doku.php?id=chart_school:trading_strategies:moving_momentum">
  *      http://stockcharts.com/help/doku.php?id=chart_school:trading_strategies:moving_momentum</a>

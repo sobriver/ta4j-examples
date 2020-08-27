@@ -34,6 +34,7 @@ import ta4jexamples.strategies.MovingMomentumStrategy;
 /**
  * This class diplays analysis criterion values after running a trading strategy
  * over a bar series.
+ * 展示一些常见的分析标准
  */
 public class StrategyAnalysis {
 
@@ -49,31 +50,32 @@ public class StrategyAnalysis {
 
         /*
          * Analysis criteria
+         * 分析标准
          */
 
-        // Total profit
+        // Total profit 总利润
         TotalProfitCriterion totalProfit = new TotalProfitCriterion();
         System.out.println("Total profit: " + totalProfit.calculate(series, tradingRecord));
-        // Number of bars
+        // Number of bars todo 数据的数量
         System.out.println("Number of bars: " + new NumberOfBarsCriterion().calculate(series, tradingRecord));
-        // Average profit (per bar)
+        // Average profit (per bar) 平均利润(每条)
         System.out
                 .println("Average profit (per bar): " + new AverageProfitCriterion().calculate(series, tradingRecord));
-        // Number of trades
+        // Number of trades 交易次数
         System.out.println("Number of trades: " + new NumberOfTradesCriterion().calculate(series, tradingRecord));
-        // Profitable trades ratio
+        // Profitable trades ratio 获利交易比率
         System.out.println(
                 "Profitable trades ratio: " + new AverageProfitableTradesCriterion().calculate(series, tradingRecord));
-        // Maximum drawdown
+        // Maximum drawdown 最大缩水
         System.out.println("Maximum drawdown: " + new MaximumDrawdownCriterion().calculate(series, tradingRecord));
-        // Reward-risk ratio
+        // Reward-risk ratio 回报率
         System.out.println("Reward-risk ratio: " + new RewardRiskRatioCriterion().calculate(series, tradingRecord));
-        // Total transaction cost
+        // Total transaction cost 总交易成本
         System.out.println("Total transaction cost (from $1000): "
                 + new LinearTransactionCostCriterion(1000, 0.005).calculate(series, tradingRecord));
-        // Buy-and-hold
+        // Buy-and-hold  买入并持有
         System.out.println("Buy-and-hold: " + new BuyAndHoldCriterion().calculate(series, tradingRecord));
-        // Total profit vs buy-and-hold
+        // Total profit vs buy-and-hold 总利润与买入并持有利润对比
         System.out.println("Custom strategy profit vs buy-and-hold strategy profit: "
                 + new VersusBuyAndHoldCriterion(totalProfit).calculate(series, tradingRecord));
     }
